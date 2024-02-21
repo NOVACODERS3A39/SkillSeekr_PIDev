@@ -1,0 +1,69 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}
+    SKILL SEEKR OFFERS
+{% endblock %}
+
+{% block body %}
+<div class="row align-items-center my-5">
+    <div class="col-md-7">
+        <h1 class="display-3 font-weight-bold text-white">Offers list</h1>
+    </div>
+    <div class="col-md-5 text-end">
+        <a href="{{ path('app_offer_new') }}" class="btn btn-lg btn-info"><i class="fa fa-plus" aria-hidden="true">&nbsp;</i> Offer</a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th scope="col" class="text-center">Id</th>
+                <th scope="col" class="text-center">Title</th>
+                <th scope="col" class="text-center">Desc.</th>
+                <th scope="col" class="text-center">Author</th>
+                <th scope="col" class="text-center">Date</th>
+                <th scope="col" class="text-center">Type</th>
+                <th scope="col" class="text-center">Motive</th>
+                <th scope="col" class="text-center">Location</th>
+                <th scope="col" class="text-center">Skills</th>
+                <th scope="col" class="text-center">Status</th>
+                <th scope="col" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offer in offers %}
+                <tr>
+                    <td class="text-center">{{ offer.id }}</td>
+                    <td class="text-center">{{ offer.title }}</td>
+                    <td class="text-center">{{ offer.description|length > 50 ? offer.description|slice(0, 50) ~ '...' : offer.description }}</td>
+                    <td class="text-center">{{ offer.author }}</td>
+                    <td class="text-center">{{ offer.CreatedAt ? offer.CreatedAt|date('Y-m-d') : '' }}</td>
+                    <td class="text-center">{{ offer.type }}</td>
+                    <td class="text-center">{{ offer.motive }}</td>
+                    <td class="text-center">{{ offer.location }}</td>
+                    <td class="text-center">
+                        {% for skill in offer.skills %}
+                            {{ skill }}
+                            {% if not loop.last %},
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ offer.status }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_offer_edit', {'id': offer.id}) }}" class="btn btn-xs btn-primary" title="Edit offer">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <a href="{{ path('app_offer_delete', {'id': offer.id}) }}" class="btn btn-xs btn-danger" title="Delete offer">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10" class="text-center">No records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

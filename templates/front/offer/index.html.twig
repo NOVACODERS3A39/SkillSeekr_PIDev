@@ -1,0 +1,69 @@
+{% extends 'front/Frontbase.html.twig' %}
+{% block title %}SkillSeekr || Browse Offers{% endblock %}
+ {% block body %}
+ <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                <h6 class="section-title bg-white text-center text-primary px-3">Latest offers</h6>
+                <h1 class="mb-5">Keep updated</h1>
+            </div>
+            <div class="row g-4">
+                {% for offer in offers %}
+                {% if offer.status == 'Published' %}
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                <div class="card rounded-3">
+                <div class="card-header rounded-3 p-0 text-center">
+                    <img class="card-img-top rounded-3" src="https://demos.creative-tim.com/argon-dashboard/assets/img/carousel-1.jpg" alt="Card image cap">
+                </div>
+                <div class="card-body pt-0 p-3 text-center">
+                <h6 class="text-center mb-0 text-capitalize py-3">{{offer.title}}</h6>
+                <span class="text-xs">{{offer.description|length > 70 ? offer.description|slice(0, 70) ~ '...' : offer.description}}</span>
+                <hr class="horizontal dark my-3">
+                <h5 class="mb-0">{{offer.createdAt|date('d-m-Y')}}</h5>
+                <button type="button" class="btn btn-dark mt-3 w-100" data-bs-toggle="modal" data-bs-target="#offer{{offer.id}}">
+                    Read more
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="offer{{offer.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Apply for offer - {{offer.title}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-unstyled text-start">
+                        <li><strong>Title: </strong> {{offer.title}}</li>
+                        <li><strong>Type: </strong> {{offer.type}}</li>
+                        <li><strong>Motive: </strong> {{offer.motive}}</li>
+                        <li><strong>Location: </strong> {{offer.location}}</li>
+                        <li><strong>Author: </strong> {{offer.author}}</li>
+                        <li><strong>Description: </strong> {{offer.description}}</li>
+                        <li><hr /></li>
+                        <li>
+                        <div class="d-flex justify-content-center align-items-center">
+                        {% for skill in offer.skills %}
+                            <button type="button" class="btn btn-outline-primary rounded-3 me-3">{{skill.skill}}</button>
+                        {% endfor %}
+                        </div>
+                        </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Apply now</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div> 
+                </div>
+                {% endif %}
+                {% endfor %}
+               
+                
+            </div>
+        </div>
+    </div>
+ {% endblock %}
