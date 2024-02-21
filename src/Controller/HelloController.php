@@ -12,7 +12,7 @@ class HelloController extends AbstractController
     #[Route('/', name: 'front_offers')]
     public function index(OfferRepository $offerRepository): Response
     {
-        return $this->render('Front/offer_front/index.html.twig', [
+        return $this->render('Front/offer/index.html.twig', [
             'offers' => $offerRepository->findAll()
         ]);
     }
