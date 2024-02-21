@@ -3,7 +3,6 @@
 namespace App\Controller;
 use App\Form\OfferType;
 use App\Entity\Status;
-use App\Entity\User;
 use App\Entity\Offer;
 use App\Repository\OfferRepository;
 use Doctrine\Persistence\ManagerRegistry; 
@@ -19,7 +18,7 @@ class OfferController extends AbstractController
     #[Route('/offerList', name: 'app_offer_index', methods: ['GET'])]
     public function index(OfferRepository $offerRepository): Response
     {
-        return $this->render('back/offer/index.html.twig', [
+        return $this->render('Back/offer/index.html.twig', [
             'offers' => $offerRepository->findAll(),
             'page_title' => 'Offers',
             'active_page' => 'Offers list',
@@ -40,7 +39,7 @@ class OfferController extends AbstractController
             $this->addFlash('success', 'Offer created successfully!');
             return $this ->redirectToRoute('app_offer_index');    
         }
-        return $this->renderForm('back/offer/new.html.twig', [
+        return $this->renderForm('Back/offer/new.html.twig', [
             'offer' => $offer,
             'form' => $form,
             'page_title' => 'Offers',
@@ -76,7 +75,7 @@ class OfferController extends AbstractController
             return $this->redirectToRoute('app_offer_index');
         }
 
-        return $this->renderForm('back/offer/edit.html.twig', [
+        return $this->renderForm('Back/offer/edit.html.twig', [
             'offer' => $o,
             'form' => $form,
             'page_title' => 'Offer Space',

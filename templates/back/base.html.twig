@@ -19,7 +19,7 @@
 		<link
 		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'" rel="stylesheet"/>
 		<!-- Nucleo Icons -->
-		<link href="{{ asset('back/css/nucleo-icons.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('Back/css/nucleo-icons.css') }}" rel="stylesheet"/>
 		<style>
 			/* Custom styles for the datepicker input */
 			.datepicker {
@@ -39,13 +39,13 @@
 			}
 		</style>
 		<link
-		href="{{ asset('back/css/nucleo-svg.css') }}" rel="stylesheet"/>
+		href="{{ asset('Back/css/nucleo-svg.css') }}" rel="stylesheet"/>
 		<!-- Font Awesome Icons -->
 		<script src="{https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 		<link
-		href="{{ asset('back/css/nucleo-svg.css') }}" rel="stylesheet"/>
+		href="{{ asset('Back/css/nucleo-svg.css') }}" rel="stylesheet"/>
 		<!-- CSS Files -->
-		<link id="pagestyle" href="{{ asset('back/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet"/> {% block css %}{% endblock %}
+		<link id="pagestyle" href="{{ asset('Back/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet"/> {% block css %}{% endblock %}
 		</head>
 
 		<body class="g-sidenav-show bg-gray-100">
@@ -55,7 +55,7 @@
 					<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
 					<!-- Adjust the width of the logo using CSS -->
 					<img
-					src="{{asset('back/img/favicon.png')}}" class="navbar-brand-img" alt="main_logo">
+					src="{{asset('Back/img/favicon.png')}}" class="navbar-brand-img" alt="main_logo">
 				<!-- Alternatively, you can add a class to style the logo -->
 
 				</div>
@@ -69,14 +69,6 @@
 									<i class="ni ni-app text-info text-lg opacity-10"></i>
 								</div>
 								<span class="nav-link-text ms-2">Offers</span>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_offer_new') }}">
-								<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-									<i class="ni ni-app text-info text-lg opacity-10"></i>
-								</div>
-								<span class="nav-link-text ms-2">Create Offer</span>
 							</a>
 						</li>
 					</ul>
@@ -117,7 +109,7 @@
 											<a class="dropdown-item border-radius-md" href="javascript:;">
 												<div class="d-flex py-1">
 													<div class="my-auto">
-														<img src="{{asset('back/img/team-2.jpg')}}" class="avatar avatar-sm  me-3 ">
+														<img src="{{asset('Back/img/team-2.jpg')}}" class="avatar avatar-sm  me-3 ">
 													</div>
 													<div class="d-flex flex-column justify-content-center">
 														<h6 class="text-sm font-weight-normal mb-1">
@@ -136,7 +128,7 @@
 											<a class="dropdown-item border-radius-md" href="javascript:;">
 												<div class="d-flex py-1">
 													<div class="my-auto">
-														<img src="{{asset('back/img/small-logos/logo-spotify.svg')}}" class="avatar avatar-sm bg-gradient-dark  me-3 ">
+														<img src="{{asset('Back/img/small-logos/logo-spotify.svg')}}" class="avatar avatar-sm bg-gradient-dark  me-3 ">
 													</div>
 													<div class="d-flex flex-column justify-content-center">
 														<h6 class="text-sm font-weight-normal mb-1">
@@ -252,11 +244,7 @@
 						</div>
 						<p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
 						<!-- Navbar Fixed -->
-						<div class="d-flex my-3">
-							<h6 class="mb-0">Navbar Fixed</h6>
-							<div class="form-check form-switch ps-0 ms-auto my-auto">
-								<input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-							</div>
+				
 						</div>
 						<hr class="horizontal dark my-sm-4">
 						<div class="mt-2 mb-5 d-flex">
@@ -269,11 +257,11 @@
 				</div>
 			</div>
 			<!--   Core JS Files   -->
-			<script src="{{ asset('back/js/core/popper.min.js') }}"></script>
-			<script src="{{ asset('back/js/core/bootstrap.min.js') }}"></script>
-			<script src="{{ asset('back/js/plugins/perfect-scrollbar.min.js') }}"></script>
-			<script src="{{ asset('back/js/plugins/smooth-scrollbar.min.js') }}"></script>
-			<script src="{{ asset('back/js/plugins/chartjs.min.js') }}"></script>
+			<script src="{{ asset('Back/js/core/popper.min.js') }}"></script>
+			<script src="{{ asset('Back/js/core/bootstrap.min.js') }}"></script>
+			<script src="{{ asset('Back/js/plugins/perfect-scrollbar.min.js') }}"></script>
+			<script src="{{ asset('Back/js/plugins/smooth-scrollbar.min.js') }}"></script>
+			<script src="{{ asset('Back/js/plugins/chartjs.min.js') }}"></script>
 			<script src="{{'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js' }}"></script>
 			<script src="{{ asset('js/skills.js') }}"></script>
 
@@ -287,9 +275,9 @@ Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
 }
 			</script>
 			<!-- Github buttons -->
-			<script async defer src="{{ asset('back/https://buttons.github.io/buttons.js') }}"></script>
+			<script async defer src="{{ asset('Back/https://buttons.github.io/buttons.js') }}"></script>
 			<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-			<script src="{{ asset('back/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
+			<script src="{{ asset('Back/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
 		</body>
 
 	</html>

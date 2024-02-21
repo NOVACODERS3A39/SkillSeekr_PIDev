@@ -55,10 +55,8 @@ class Motive
 
     public function removeOffer(Offer $offer): static
     {
-        if ($this->offers->removeElement($offer)) {
-            // Check if the Offer's motiveEntity is the same as the current Motive entity
+        if ($this->offers->removeElement($offer)) {   
             if ($offer->getMotive() === $this) {
-                // Set the Offer's motiveEntity to null
                 $offer->setMotive(null);
             }
         }

@@ -12,7 +12,7 @@ class IndexBackController extends AbstractController
     public function index(): Response
     {
         $offers = 'sql';
-        return $this->render('back/pages/indexback/index.html.twig', [
+        return $this->render('Back/pages/indexback/index.html.twig', [
             'page_title' => 'Offres',
             'active_page' => 'Offers',
             'offers' => $offers

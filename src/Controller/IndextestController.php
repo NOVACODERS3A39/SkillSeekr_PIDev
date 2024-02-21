@@ -12,7 +12,7 @@ class IndextestController extends AbstractController
     public function index(): Response
     {
         $offers = 'sql';
-        return $this->render('back/pages/indextest/index.html.twig', [
+        return $this->render('Back/pages/indextest/index.html.twig', [
             'page_title' => 'Feed',
             'active_page' => 'Feed',
             'offers' => $offers
