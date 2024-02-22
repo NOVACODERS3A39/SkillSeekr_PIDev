@@ -1,0 +1,61 @@
+{{ form_start(form) }}
+
+{{ form_row(form.title, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-control rounded-3', 'placeholder': 'Enter title'}}) }}
+{{ form_row(form.description, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-control rounded-3', 'placeholder': 'Enter description'}}) }}
+{{ form_row(form.author, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-control rounded-3', 'placeholder': 'Enter author email'}}) }}
+{{ form_row(form.CreatedAt, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-control rounded-3'}}) }}
+{{ form_row(form.motive, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-select rounded-3'}, 'placeholder': 'Select a motive'}) }}
+{{ form_row(form.type, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-select rounded-3'}, 'placeholder': 'Select your offer type'}) }}
+{{ form_row(form.location, {'label_attr': {'class': 'text-primary fw-bold'}, 'attr': {'class': 'form-select rounded-3'}, 'placeholder': 'Select offer location'}) }}
+
+{# Custom rendering for skills field #}
+<div class="form-group">
+	<label class="text-primary fw-bold">Skills</label>
+	<div class="skills-container">
+		{% for child in form.skills %}
+			<div class="form-check">
+				{{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+				{{ form_label(child, child.vars.value, {'label_attr': {'class': 'form-check-label text-dark font-weight-normal'}}) }}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{# Spacing adjustment #}
+<div style="margin-bottom: 20px;"></div>
+
+{# Custom rendering for status field #}
+<div class="form-group">
+	<label class="text-primary fw-bold">Status</label>
+	<div class="d-flex justify-content-between">
+		{% for child in form.status %}
+			<div class="form-check mx-2">
+				{{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+				{{ form_label(child, child.vars.value, {'label_attr': {'class': 'form-check-label text-dark font-weight-normal'}}) }}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{# Submit button #}
+<button type="submit" class="btn btn-primary btn-lg btn-rounded mt-3">Submit</button>
+
+{{ form_end(form) }}
+
+<style>
+	.skills-container {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.skills-container .form-check {
+		flex: 0 0 calc(33.33% - 10px); /* Adjust width for 3 columns with spacing */
+		margin-right: 10px; /* Adjust spacing between checkboxes */
+	}
+
+	.btn-submit {
+		border-radius: 20px; /* Adjust border radius for rounder corners */
+		font-size: 18px; /* Adjust font size for larger text */
+	}
+</style>
