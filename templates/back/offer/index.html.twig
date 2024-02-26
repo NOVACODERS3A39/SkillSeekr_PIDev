@@ -86,7 +86,7 @@
 		<!-- Pagination -->
 		<nav aria-label="Page navigation">
 			<ul class="pagination justify-content-center">
-				{% set total_pages = (offers|length / 10)|round(0, 'ceil') %}
+				{% set total_pages = (offers|length / 5)|round(0, 'ceil') %}
 				{% set current_page = app.request.query.get('page') ?? 1 %}
 
 				{% if current_page > 1 %}
