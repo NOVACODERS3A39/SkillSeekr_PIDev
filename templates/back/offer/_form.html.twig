@@ -1,89 +1,27 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate','class': 'my-4', 'style': 'background-color: rgba(173, 216, 230, 0.8); padding: 20px; border-radius: 15px; '}}) }}
 
 {{ form_row(form.title) }}
-{# <div class="form-group">
-    {{ form_label(form.title, 'Title', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Enter title'}}) }}
-    {% if form_errors(form.title) %}
-        <div class="text-danger">{{ form_errors(form.title) }}</div>
-    {% endif %}
-</div> #}
 
 {{ form_row(form.description) }}
 
-{# <div class="form-group">
-    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter description'}}) }}
-    {% if form_errors(form.description) %}
-        <div class="text-danger">{{ form_errors(form.description) }}</div>
-    {% endif %}
-</div> #}
-
 {{ form_row(form.author) }}
-{# <div class="form-group">
-    {{ form_label(form.author, 'Author', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.author, {'attr': {'class': 'form-control', 'placeholder': 'Please Enter Author Email'}}) }}
-    {% if form_errors(form.author) %}
-        <div class="text-danger">{{ form_errors(form.author) }}</div>
-    {% endif %}
-</div> #}
 
 {{ form_row(form.CreatedAt) }}
-{# <div class="form-group">
-    {{ form_label(form.CreatedAt, 'Select a Creation/Publishing Date', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    <div class="input-group">
-        {{ form_widget(form.CreatedAt, {'attr': {'class': 'form-control datepicker', 'placeholder': 'Select a date', 'autocomplete': 'off'}, 'style': 'border-top-right-radius: 0; border-bottom-right-radius: 0;'}) }}
-    </div>
-    {% if form_errors(form.CreatedAt) %}
-        <div class="text-danger">{{ form_errors(form.CreatedAt) }}</div>
-    {% endif %}
-</div> #}
+
 {{ form_row(form.motive) }}
-{# <div class="form-group">
-    {{ form_label(form.motive, 'Motive', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.motive, {'attr': {'class': 'form-control'}, 'placeholder': 'Select motive'}) }}
-    {% if form_errors(form.motive) %}
-        <div class="text-danger">{{ form_errors(form.motive) }}</div>
-    {% endif %}
-</div> #}
 
 {{ form_row(form.type) }}
-{# <div class="form-group">
-    {{ form_label(form.type, 'Type', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.type, {'attr': {'class': 'form-control'}, 'placeholder': 'Select type'}) }}
-    {% if form_errors(form.type) %}
-        <div class="text-danger">{{ form_errors(form.type) }}</div>
-    {% endif %}
-</div> #}
 
 {{ form_row(form.location) }}
-{# <div class="form-group">
-    {{ form_label(form.location, 'Location', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.location, {'attr': {'class': 'form-control'}, 'placeholder': 'Select location'}) }}
-    {% if form_errors(form.location) %}
-        <div class="text-danger">{{ form_errors(form.location) }}</div>
-    {% endif %}
-</div> #}
 
 {{ form_row(form.skills) }}
-{# <div class="form-group">
-    {{ form_label(form.skills, 'Skills', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.skills, {'attr': {'class': 'form-control', 'multiple': 'multiple'}}) }}
-    {% if form_errors(form.skills) %}
-        <div class="text-danger">{{ form_errors(form.skills) }}</div>
-    {% endif %}
-</div> #}
-
+{{ form_row(form.file) }}
 {{ form_row(form.status) }}
-{# <div class="form-group">
-    {{ form_label(form.status, 'Status', {'label_attr': {'class': 'font-weight-bold'}}) }}
-    {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
-    {% if form_errors(form.status) %}
-        <div class="text-danger">{{ form_errors(form.status) }}</div>
-    {% endif %}
-</div> #}
 
 <div class="form-group text-center mt-4">
-    <button type="submit" class="btn btn-md btn-primary w-100">Submit</button>
-    {{ form_end(form) }}
+	<button type="submit" class="btn btn-md btn-primary w-100">
+		Submit Offer
+	</button>
 </div>
+
+{{ form_end(form) }}

@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Validator\Constraints as CustomAssert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
@@ -73,8 +74,15 @@ class Offer
     )]
     private Collection $skills;
 
-    
+    #[Assert\File(
+        maxSize: "5M",
+        mimeTypes: ["image/jpeg", "image/png", "application/pdf"],
+        mimeTypesMessage: "Please upload a valid image (JPEG or PNG) or PDF file"
+    )]
+    private ?UploadedFile $file = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $fileName = null;
 
    // Getters and setters
 
@@ -220,6 +228,26 @@ class Offer
 
         return $this;
     }
-}
+    public function getFile(): ?UploadedFile
+    {
+        return $this->file;
+    }
 
+    public function setFile(?UploadedFile $file): self
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): self
+    {
+        $this->fileName = $fileName;
+        return $this;
+    }
+}
       

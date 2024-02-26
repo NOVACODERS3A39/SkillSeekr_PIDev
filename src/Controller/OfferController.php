@@ -9,7 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 
 class OfferController extends AbstractController
 {
@@ -24,54 +25,91 @@ class OfferController extends AbstractController
     }
 
     #[Route('/newOffer', name: 'app_offer_new')]
-    public function new(ManagerRegistry $mr,Request $request,): Response
+    public function new(ManagerRegistry $mr, Request $request): Response
     {
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){    
-           //dd($form);
-            $em = $mr->getManager(); 
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Handle file upload
+            $file = $form->get('file')->getData();
+            if ($file) {
+                $fileName = uniqid().'.'.$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('upload_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // Handle file upload error
+                    // Log or display an error message
+                }
+                $offer->setFileName($fileName);
+            }
+
+            // Save offer to database
+            $em = $mr->getManager();
             $em->persist($offer);
             $em->flush();
+            
             $this->addFlash('success', 'Offer created successfully!');
-            return $this ->redirectToRoute('app_offer_index');    
+            return $this->redirectToRoute('app_offer_index');    
         }
+        
         return $this->renderForm('Back/offer/new.html.twig', [
             'offer' => $offer,
             'form' => $form,
             'page_title' => 'Offers',
             'active_page' => 'New offer',
         ]);
-        }
+    }
+
     #[Route('/editOffer/{id}', name: 'app_offer_edit')]
-    public function edit( $id, ManagerRegistry $mr, Request $request, OfferRepository $repo): Response
-    { $o = $repo->find($id);
-        if (!$o) {
+    public function edit($id, ManagerRegistry $mr, Request $request, OfferRepository $repo): Response
+    { 
+        $offer = $repo->find($id);
+        if (!$offer) {
             throw $this->createNotFoundException('Offer not found.');
         }
-    
-        $form = $this->createForm(OfferType::class, $o);
+
+        $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Handle file upload
+            $file = $form->get('file')->getData();
+            if ($file) {
+                $fileName = uniqid().'.'.$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('upload_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // Handle file upload error
+                    // Log or display an error message
+                }
+                $offer->setFileName($fileName);
+            }
 
-
+            // Save edited offer to database
             $em = $mr->getManager();
-            $em->persist($o);
+            $em->persist($offer);
             $em->flush();
+            
             $this->addFlash('success', 'Offer has been updated successfully!');
             return $this->redirectToRoute('app_offer_index');
         }
 
         return $this->renderForm('Back/offer/edit.html.twig', [
-            'offer' => $o,
+            'offer' => $offer,
             'form' => $form,
             'page_title' => 'Offer Space',
             'active_page' => 'Add Your Offer',
         ]);
-        
     }
+    
     #[Route('/deleteOffer{id}', name: 'app_offer_delete')]
     public function remove($id,ManagerRegistry $mr,OfferRepository $repo) : Response {
         $offer=$repo->find($id);
@@ -136,7 +174,7 @@ class OfferController extends AbstractController
         ]);
         
     }
-    #[Route('/deleteOffer{id}', name: 'app_offer_delete')]
+    #[Route('/deleteOffer{id}', name: 'front_offer_delete')]
     public function removef($id,ManagerRegistry $mr,OfferRepository $repo) : Response {
         $offer=$repo->find($id);
         $em=$mr->getManager();

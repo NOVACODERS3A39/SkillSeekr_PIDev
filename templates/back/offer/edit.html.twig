@@ -1,17 +1,19 @@
-{% extends 'back/base.html.twig' %}
+{% extends 'Back/base.html.twig' %}
 
 {% block title %}
     Edit Offer
 {% endblock %}
 
 {% block body %}
-    <h1 style="font-size: 2.5rem; font-weight: bold; text-align: center; color: white;">Edit Your SKILL Offer</h1>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h1 class="display-3 font-weight-bold text-white text-center">Edit your SS Offer</h1>
 
-    {{ include('back/offer/_form.html.twig') }}
+            {{ include('Back/offer/_form.html.twig') }}
+        </div>
+    </div>
     <div class="row pt-4">
     <div class="col-md-12"><a href="{{ path('app_offer_index') }}" class="btn btn-success"><i class="fa fa-angle-left" aria-hidden="true">&nbsp;</i>
 back to list</a></div>
     </div>
-    {# <script src="{{'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js' }}"></script>
-    <script src="{{ asset('js/skills.js') }}"></script> #}
 {% endblock %}

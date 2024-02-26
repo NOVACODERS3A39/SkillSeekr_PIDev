@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class OfferType extends AbstractType
 {
@@ -78,6 +79,11 @@ class OfferType extends AbstractType
             'choice_label' => 'skill',
             'multiple' => true,
             'expanded' => true,
+        ])
+        ->add('file', FileType::class, [
+            'label' => 'Upload An Image/PDF',
+            'required' => false, // Set to true if the file upload is mandatory
         ]);
+        
 }
 }
