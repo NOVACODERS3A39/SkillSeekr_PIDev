@@ -68,6 +68,14 @@
 															</div>
 														</li>
 													</ul>
+													{% if offer.fileName %}
+														<div class="text-center mt-3">
+															<a href="{{ path('app_download_file', { 'id': offer.id, 'filename': offer.fileName }) }}" class="btn btn-success rounded-pill py-2 px-4" download>
+																<i class="fas fa-download me-1"></i>
+																Download Attachment
+															</a>
+														</div>
+													{% endif %}
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
