@@ -15,5 +15,14 @@
 		Submit Offer
 	</button>
 </div>
-
+<script>
+	// Check if the success flash message is present in the DOM
+if (document.querySelector('#successAlert')) { // If present, show the success alert
+document.querySelector('#successAlert').style.display = 'block';
+// Fade out the alert after 5 seconds
+setTimeout(function () {
+document.querySelector('#successAlert').style.display = 'none';
+}, 5000);
+}
+</script>
 {{ form_end(form) }}

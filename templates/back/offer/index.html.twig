@@ -1,10 +1,21 @@
-{% extends 'back/base.html.twig' %}
+{% extends 'Back/base.html.twig' %}
 
 {% block title %}
-	Offers
+    Offers
 {% endblock %}
 
 {% block body %}
+{% set successFlash = app.session.flashbag.get('success') %}
+{% if successFlash is not empty %}
+    <div id="successAlert" class="alert alert-success mt-4" style="display: none; position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 9999;">
+        <span class="iconify" data-icon="carbon:checkmark-outline" data-inline="false"></span>
+        {% for message in successFlash %}
+            {{ message|raw }}<br>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
 	<div class="row align-items-center my-5">
 		<div class="col-md-7">
 			<h1 class="display-3 font-weight-bold text-white">Offers list</h1>
@@ -82,6 +93,7 @@
 			</tbody>
 		</table>
 	</div>
+
 	{% if offers|length > 0 %}
 		<!-- Pagination -->
 		<nav aria-label="Page navigation">

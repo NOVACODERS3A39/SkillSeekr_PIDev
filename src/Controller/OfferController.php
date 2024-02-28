@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Form\OfferType;
+use App\Form\OfferFType;
 use App\Entity\Offer;
 use App\Repository\OfferRepository;
 use Doctrine\Persistence\ManagerRegistry; 
@@ -10,10 +11,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use App\Repository\SkillRepository;
 
 class OfferController extends AbstractController
 {
+    private $skillRepository;
+
+    public function __construct(SkillRepository $skillRepository)
+    {
+        $this->skillRepository = $skillRepository;
+    }
+    public function Skillsearch(SkillRepository $skillRepository)
+    {
+        $skills = $skillRepository->findAll();
+    
+        return $this->render('Front/Offer/_form.html.twig', [
+            'skills' => $skills,
+        ]);
+    }
     #[Route('/offerList', name: 'app_offer_index', methods: ['GET'])]
     public function index(OfferRepository $offerRepository): Response
     {
@@ -130,10 +147,12 @@ class OfferController extends AbstractController
     }
 
     #[Route('/newFOffer', name: 'front_offer_new')]
-    public function newf(ManagerRegistry $mr,Request $request,): Response
-    {
+    public function newf(ManagerRegistry $mr, Request $request, SkillRepository $skillRepository): Response
+    {   
+        // Retrieve skills data from the repository
+        $skills = $skillRepository->findAll();
         $offer = new Offer();
-        $form = $this->createForm(OfferType::class, $offer);
+        $form = $this->createForm(OfferFType::class, $offer);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -152,7 +171,7 @@ class OfferController extends AbstractController
                 }
                 $offer->setFileName($fileName);
             }
-
+    
             // Save offer to database
             $em = $mr->getManager();
             $em->persist($offer);
@@ -165,21 +184,24 @@ class OfferController extends AbstractController
         return $this->renderForm('Front/offer/new.html.twig', [
             'offer' => $offer,
             'form' => $form,
-            'page_title' => 'Offers',
-            'active_page' => 'New offer',
+            'skills' => $skills, // Pass the skills data to the template
         ]);
     }
+    
     #[Route('/editFOffer/{id}', name: 'front_offer_edit')]
-    public function editf( $id, ManagerRegistry $mr, Request $request, OfferRepository $repo): Response
+    public function editf($id, ManagerRegistry $mr, Request $request, OfferRepository $repo, SkillRepository $skillRepository): Response
     { 
         $offer = $repo->find($id);
         if (!$offer) {
             throw $this->createNotFoundException('Offer not found.');
         }
-
-        $form = $this->createForm(OfferType::class, $offer);
+    
+        // Retrieve skills data from the repository
+        $skills = $skillRepository->findAll();
+    
+        $form = $this->createForm(OfferFType::class, $offer);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             // Handle file upload
             $file = $form->get('file')->getData();
@@ -191,13 +213,10 @@ class OfferController extends AbstractController
                         $fileName
                     );
                 } catch (FileException $e) {
-                    // Handle file upload error
-                    // Log or display an error message
                 }
                 $offer->setFileName($fileName);
             }
-
-            // Save edited offer to database
+    
             $em = $mr->getManager();
             $em->persist($offer);
             $em->flush();
@@ -205,14 +224,14 @@ class OfferController extends AbstractController
             $this->addFlash('success', 'Offer has been updated successfully!');
             return $this->redirectToRoute('app_offer_front');
         }
-
+    
         return $this->renderForm('Front/offer/edit.html.twig', [
             'offer' => $offer,
             'form' => $form,
-            'page_title' => 'Offer Space',
-            'active_page' => 'Add Your Offer',
+            'skills' => $skills, // Pass the skills data to the template
         ]);
     }
+    
     #[Route('/deleteFOffer{id}', name: 'front_offer_delete')]
     public function removef($id,ManagerRegistry $mr,OfferRepository $repo) : Response {
         $offer=$repo->find($id);
@@ -221,5 +240,17 @@ class OfferController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('app_offer_front');
         }
+        #[Route('/search-skills', name: 'search_skills')]
+    public function searchSkills(SkillRepository $skillRepository): JsonResponse
+    {
+        // Fetch all skills from the database
+        $skills = $skillRepository->findAllSkills();
 
+        // Extract skill names from skill objects
+        $skillNames = array_map(function($skill) {
+            return $skill->getSkill();
+        }, $skills);
+
+        return new JsonResponse($skillNames);
+    }
 }

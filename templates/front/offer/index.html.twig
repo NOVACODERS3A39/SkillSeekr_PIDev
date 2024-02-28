@@ -2,16 +2,30 @@
 {% block title %}SKILLSEEKR | Browse Offers
 {% endblock %}
 {% block body %}
+	<div class="container">
+		<div class="filter-container bg-light p-3 rounded shadow">
+			<h5 class="mb-3">Filter by:</h5>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="filterType" id="filterAll" value="all" checked>
+				<label class="form-check-label" for="filterAll">All</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="filterType" id="filterInternship" value="internship">
+				<label class="form-check-label" for="filterInternship">Internships</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="filterType" id="filterMission" value="mission">
+				<label class="form-check-label" for="filterMission">Missions</label>
+			</div>
+		</div>
+	</div>
+
 	<div class="container-xxl py-5">
 		<div class="container">
-			<div class="text-center wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
-				<h6 class="section-title bg-white text-center text-primary px-3">Latest offers</h6>
-				<h1 class="mb-5">Keep updated</h1>
-			</div>
 			<div class="row g-4">
 				{% for offer in offers %}
 					{% if offer.status == 'Published' %}
-						<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+						<div class="col-lg-4 col-md-6 wow fadeInUp offer-item hidden" data-type="{{ offer.type }}" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
 							<div class="card rounded-3">
 								<div class="card-header rounded-3 p-0 text-center">
 									<img class="card-img-top rounded-3" src="https://demos.creative-tim.com/argon-dashboard/assets/img/carousel-1.jpg" alt="Card image cap">
@@ -94,4 +108,34 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		document.getElementById('filterInternship').addEventListener('click', function () {
+const missionOffers = document.querySelectorAll('.offer-item[data-type="Mission"]');
+missionOffers.forEach(function (offer) {
+offer.classList.add('d-none');
+});
+const internshipOffers = document.querySelectorAll('.offer-item[data-type="Internship"]');
+internshipOffers.forEach(function (offer) {
+offer.classList.remove('d-none');
+});
+});
+
+document.getElementById('filterMission').addEventListener('click', function () {
+const internshipOffers = document.querySelectorAll('.offer-item[data-type="Internship"]');
+internshipOffers.forEach(function (offer) {
+offer.classList.add('d-none');
+});
+const missionOffers = document.querySelectorAll('.offer-item[data-type="Mission"]');
+missionOffers.forEach(function (offer) {
+offer.classList.remove('d-none');
+});
+});
+
+document.getElementById('filterAll').addEventListener('click', function () {
+const allOffers = document.querySelectorAll('.offer-item');
+allOffers.forEach(function (offer) {
+offer.classList.remove('d-none');
+});
+});
+	</script>
 {% endblock %}

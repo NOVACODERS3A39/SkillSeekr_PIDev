@@ -68,10 +68,6 @@ class Offer
     #[ORM\JoinTable(name: "offer_skills")]
     #[ORM\JoinColumn(name: "id", referencedColumnName: "id")]
     #[ORM\InverseJoinColumn(name: "skill", referencedColumnName: "skill")]
-    #[Assert\Count(
-        min: 1,
-        minMessage: "Please select at least one skill"
-    )]
     private Collection $skills;
 
     #[Assert\File(

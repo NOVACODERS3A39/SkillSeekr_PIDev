@@ -11,19 +11,19 @@ use App\Entity\Status;
 use App\Entity\Type as AppEntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class OfferType extends AbstractType
+class OfferFType extends AbstractType
 {
-    private $security;
+    private $router;
 
-    public function __construct(Security $security)
+    public function __construct(UrlGeneratorInterface $router)
     {
-        $this->security = $security;
+        $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -49,15 +49,15 @@ class OfferType extends AbstractType
         ])
         ->add('motive', EntityType::class, [
             'class' => Motive::class,
-            'placeholder' => 'Select a motive', // Placeholder for motive dropdown
+            'placeholder' => 'Select a motive', 
         ])
         ->add('type', EntityType::class, [
             'class' => AppEntityType::class,
-            'placeholder' => 'Select your offer type', // Placeholder for type dropdown
+            'placeholder' => 'Select your offer type', 
         ])
         ->add('location', EntityType::class, [
             'class' => Location::class,
-            'placeholder' => 'Select offer location', // Placeholder for location dropdown
+            'placeholder' => 'Select offer location', 
         ])
         ->add('status', EntityType::class, [
             'class' => Status::class,
@@ -67,16 +67,10 @@ class OfferType extends AbstractType
                 return $repository->createQueryBuilder('s');
             },
         ])
-        ->add('skills', EntityType::class, [
-            'class' => Skill::class,
-            'choice_label' => 'skill',
-            'multiple' => true,
-            'expanded' => true,
-        ])
         ->add('file', FileType::class, [
             'label' => 'Upload An Image/PDF',
             'required' => false, // Set to true if the file upload is mandatory
         ]);
-        
+
 }
 }
