@@ -96,15 +96,55 @@
 													{% endif %}
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Apply now</button>
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+													<button type="button" class="btn btn-primary" id="applyButton">Apply now</button>
 												</div>
 											</div>
 										</div>
 									</div>
+
+
 								</div>
 							</div>
 						</div>
+						<!-- Second Modal -->
+						<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+							<div
+								class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+								<!-- Center the modal and allow scrolling if necessary -->
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="applyModalLabel">Apply for Offer</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div
+										class="modal-body">
+										<!-- Form fields for author, subject, and demand -->
+										<form id="applyForm">
+											<div class="mb-3">
+												<label for="author" class="form-label">Author</label>
+												<input type="text" class="form-control" id="author" name="author" required>
+											</div>
+											<div class="mb-3">
+												<label for="subject" class="form-label">Subject</label>
+												<input type="text" class="form-control" id="subject" name="subject" required>
+											</div>
+											<div class="mb-3">
+												<label for="demand" class="form-label">Demand</label>
+												<!-- Increase rows attribute to make textarea bigger -->
+												<textarea class="form-control" id="demand" name="demand" rows="4" required></textarea>
+												<!-- Reduced the number of rows -->
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" id="sendButton">Send</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
 					{% endif %}
 				{% endfor %}
 
@@ -140,6 +180,11 @@ const allOffers = document.querySelectorAll('.offer-item');
 allOffers.forEach(function (offer) {
 offer.classList.remove('d-none');
 });
+});
+	</script>
+	<script>
+		document.getElementById('applyButton').addEventListener('click', function () {
+$('#applyModal').modal('show');
 });
 	</script>
 {% endblock %}
