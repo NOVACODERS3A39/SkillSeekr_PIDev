@@ -79,6 +79,17 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- Flash message -->
+		{% set successFlash = app.session.flashbag.get('success') %}
+		{% if successFlash is not empty %}
+			<div id="successAlert" class="alert alert-success mt-4" style="display: none; position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: #d3f9d8; border-color: #1c7836; color: #1c7836;">
+				<span class="iconify" data-icon="carbon:checkmark-outline" data-inline="false"></span>
+				{% for message in successFlash %}
+					{{ message|raw }}<br>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<!-- End of Flash message -->
 		{% if offers|length > 0 %}
 			<!-- Pagination -->
 			<nav aria-label="Page navigation">
@@ -124,4 +135,23 @@
 			<i class="fa fa-plus" aria-hidden="true">&nbsp;</i>
 			Add Offer
 		</a>
-	{% endblock %}
+	</div>
+
+	<script>
+		// Display the success flash message with a smooth entrance effect and hide it after a few seconds
+document.addEventListener('DOMContentLoaded', function () {
+var successAlert = document.getElementById('successAlert');
+if (successAlert) {
+setTimeout(function () {
+successAlert.style.display = 'block';
+successAlert.classList.add('animate__animated', 'animate__fadeInDown');
+
+// Hide the flash message after 3 seconds (adjust as needed)
+setTimeout(function () {
+successAlert.style.display = 'none';
+}, 3000);
+}, 500); // Delay the appearance for half a second (adjust as needed)
+}
+});
+	</script>
+{% endblock %}

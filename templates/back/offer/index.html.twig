@@ -1,19 +1,19 @@
 {% extends 'Back/base.html.twig' %}
 
 {% block title %}
-    Offers
+	Offers
 {% endblock %}
 
 {% block body %}
-{% set successFlash = app.session.flashbag.get('success') %}
-{% if successFlash is not empty %}
-    <div id="successAlert" class="alert alert-success mt-4" style="display: none; position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 9999;">
-        <span class="iconify" data-icon="carbon:checkmark-outline" data-inline="false"></span>
-        {% for message in successFlash %}
-            {{ message|raw }}<br>
-        {% endfor %}
-    </div>
-{% endif %}
+	{% set successFlash = app.session.flashbag.get('success') %}
+	{% if successFlash is not empty %}
+		<div id="successAlert" class="alert alert-success mt-4" style="display: none; position: fixed; top: 50px; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: #c3e6cb; border-color: #28a745; border-radius: 10px; animation: fadeIn 0.5s ease-in-out;">
+			<span class="iconify" data-icon="carbon:checkmark-outline" data-inline="false"></span>
+			{% for message in successFlash %}
+				{{ message|raw }}<br>
+			{% endfor %}
+		</div>
+	{% endif %}
 
 
 	<div class="row align-items-center my-5">
@@ -134,4 +134,29 @@
 			color: white;
 		}
 	</style>
+	<style>
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+				transform: translateY(-20px);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	</style>
+
+	<script>
+		// Show the success flash message with smooth entrance animation
+document.addEventListener('DOMContentLoaded', function () {
+const successAlert = document.getElementById('successAlert');
+if (successAlert) {
+successAlert.style.display = 'block';
+setTimeout(function () {
+successAlert.style.display = 'none';
+}, 5000); // Hide after 5 seconds
+}
+});
+	</script>
 {% endblock %}

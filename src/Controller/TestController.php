@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-require_once './vendor/autoload.php';
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +23,6 @@ class TestController extends AbstractController
                 ->to('sarah.henia@esprit.tn')
                 ->subject('Test Email')
                 ->text('This is a test email sent from Symfony Mailer Bundle.');
-    
             // Send the email
             $mailer->send($email);
     
