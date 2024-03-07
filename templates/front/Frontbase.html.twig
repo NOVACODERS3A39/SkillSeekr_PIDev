@@ -62,8 +62,15 @@
 				{# <a href="#" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Home</a> #}
 				<a href="{{ path('front_offers') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Browse</a>
 				<a href="{{ path('app_offer_front') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Offers</a>
+				<a href="{{ path('app_rec') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Reclamation</a>
+				{% if app.user %}
+				<a href="{{ path('mes_rec') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Mes Reclamation</a>
+				{% endif %}	
+				<a href="{{ path('app_recrutementf_index') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Recrutement</a>
+				<a href="{{ path('app_entretientf_index') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Entretient </a>
+				<a href="{{ path('list_profile_front') }}" class="nav-item nav-link active" onmouseover="this.style.color='black'" onmouseout="this.style.color=''">Profile</a>
 			</div>
-			<a href="{{ path('app_offer_index') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Dashboard<i class="fa fa-arrow-right ms-3"></i>
+			<a  href="{{ path('app_login') }}"  class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-arrow-right ms-3"></i>
 			</a>
 		</div>
 	</body>

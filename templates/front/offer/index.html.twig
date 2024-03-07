@@ -138,7 +138,7 @@
 										</form>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary" id="sendButton">Send</button>
+										<a href="{{ path('app_test') }}" class="btn btn-primary">Send</a>
 									</div>
 								</div>
 							</div>
@@ -152,6 +152,7 @@
 			</div>
 		</div>
 	</div>
+
 	<script>
 		document.getElementById('filterInternship').addEventListener('click', function () {
 const missionOffers = document.querySelectorAll('.offer-item[data-type="Mission"]');

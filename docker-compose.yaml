@@ -1,0 +1,5 @@
+version: "4"
+services:
+  mailer:
+    image: schickling/mailcatcher:latest
+    ports: [1025, 1080]

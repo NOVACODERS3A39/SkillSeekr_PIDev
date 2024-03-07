@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use App\Repository\SkillRepository;
 
 class OfferController extends AbstractController
@@ -42,7 +42,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/newOffer', name: 'app_offer_new')]
-    public function new(ManagerRegistry $mr, Request $request, SessionInterface $session): Response
+    public function new(ManagerRegistry $mr, Request $request): Response
     {
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
@@ -64,17 +64,14 @@ class OfferController extends AbstractController
                 }
                 $offer->setFileName($fileName);
             }
-    
+
             // Save offer to database
             $em = $mr->getManager();
             $em->persist($offer);
             $em->flush();
             
-            // Set session flag indicating that an offer was created
-            $session->set('offer_created', true);
-            
             $this->addFlash('success', 'Offer created successfully!');
-            return $this->redirectToRoute('app_offer_index');
+            return $this->redirectToRoute('app_offer_index');    
         }
         
         return $this->renderForm('Back/offer/new.html.twig', [
@@ -84,18 +81,18 @@ class OfferController extends AbstractController
             'active_page' => 'New offer',
         ]);
     }
-    
+
     #[Route('/editOffer/{id}', name: 'app_offer_edit')]
-    public function edit($id, ManagerRegistry $mr, Request $request, OfferRepository $repo, SessionInterface $session): Response
+    public function edit($id, ManagerRegistry $mr, Request $request, OfferRepository $repo): Response
     { 
         $offer = $repo->find($id);
         if (!$offer) {
             throw $this->createNotFoundException('Offer not found.');
         }
-    
+
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             // Handle file upload
             $file = $form->get('file')->getData();
@@ -112,24 +109,16 @@ class OfferController extends AbstractController
                 }
                 $offer->setFileName($fileName);
             }
-    
+
             // Save edited offer to database
             $em = $mr->getManager();
             $em->persist($offer);
             $em->flush();
             
-            // Check if 'offer_created' flag is set
-            if ($session->get('offer_created')) {
-                // Display a flash message indicating that a new offer was recently created
-                $this->addFlash('success', 'A new offer was recently created.');
-                // Remove the 'offer_created' flag from the session
-                $session->remove('offer_created');
-            }
-    
             $this->addFlash('success', 'Offer has been updated successfully!');
             return $this->redirectToRoute('app_offer_index');
         }
-    
+
         return $this->renderForm('Back/offer/edit.html.twig', [
             'offer' => $offer,
             'form' => $form,
@@ -138,30 +127,15 @@ class OfferController extends AbstractController
         ]);
     }
     
-    
     #[Route('/deleteOffer{id}', name: 'app_offer_delete')]
-    public function remove($id, ManagerRegistry $mr, OfferRepository $repo, SessionInterface $session): Response
-    {
-        $offer = $repo->find($id);
-        if (!$offer) {
-            throw $this->createNotFoundException('Offer not found.');
-        }
-    
-        $em = $mr->getManager();
+    public function remove($id,ManagerRegistry $mr,OfferRepository $repo) : Response {
+        $offer=$repo->find($id);
+        $em=$mr->getManager();
         $em->remove($offer);
         $em->flush();
-        
-        // Check if 'offer_created' flag is set
-        if ($session->get('offer_created')) {
-            // Display a flash message indicating that a new offer was recently created
-            $this->addFlash('success', 'A new offer was recently created.');
-            // Remove the 'offer_created' flag from the session
-            $session->remove('offer_created');
-        }
-    
         return $this->redirectToRoute('app_offer_index');
-    }
-    
+        }
+
 
 
         #[Route('/OfferCruds', name: 'app_offer_front')]
@@ -173,7 +147,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/newFOffer', name: 'front_offer_new')]
-    public function newf(ManagerRegistry $mr, Request $request, SkillRepository $skillRepository, SessionInterface $session): Response
+    public function newf(ManagerRegistry $mr, Request $request, SkillRepository $skillRepository): Response
     {   
         // Retrieve skills data from the repository
         $skills = $skillRepository->findAll();
@@ -203,9 +177,6 @@ class OfferController extends AbstractController
             $em->persist($offer);
             $em->flush();
             
-            // Add 'offer_created' flag to the session
-            $session->set('offer_created', true);
-            
             $this->addFlash('success', 'Offer created successfully!');
             return $this->redirectToRoute('app_offer_front');    
         }
@@ -217,9 +188,8 @@ class OfferController extends AbstractController
         ]);
     }
     
-    
     #[Route('/editFOffer/{id}', name: 'front_offer_edit')]
-    public function editf($id, ManagerRegistry $mr, Request $request, OfferRepository $repo, SkillRepository $skillRepository, SessionInterface $session): Response
+    public function editf($id, ManagerRegistry $mr, Request $request, OfferRepository $repo, SkillRepository $skillRepository): Response
     { 
         $offer = $repo->find($id);
         if (!$offer) {
@@ -251,9 +221,6 @@ class OfferController extends AbstractController
             $em->persist($offer);
             $em->flush();
             
-            // Add 'offer_created' flag to the session
-            $session->set('offer_created', true);
-    
             $this->addFlash('success', 'Offer has been updated successfully!');
             return $this->redirectToRoute('app_offer_front');
         }
@@ -263,37 +230,27 @@ class OfferController extends AbstractController
             'form' => $form,
             'skills' => $skills, // Pass the skills data to the template
         ]);
-    }    
-    
-    #[Route('/deleteFOffer{id}', name: 'front_offer_delete')]
-public function removef($id, ManagerRegistry $mr, OfferRepository $repo, SessionInterface $session): Response 
-{
-    $offer = $repo->find($id);
-    if (!$offer) {
-        throw $this->createNotFoundException('Offer not found.');
     }
     
-    $em = $mr->getManager();
-    $em->remove($offer);
-    $em->flush();
-    
-    // Add flash message to notify user about the successful deletion
-    $this->addFlash('success', 'Offer has been deleted successfully!');
-    
-    return $this->redirectToRoute('app_offer_front');
-}
+    #[Route('/deleteFOffer{id}', name: 'front_offer_delete')]
+    public function removef($id,ManagerRegistry $mr,OfferRepository $repo) : Response {
+        $offer=$repo->find($id);
+        $em=$mr->getManager();
+        $em->remove($offer);
+        $em->flush();
+        return $this->redirectToRoute('app_offer_front');
+        }
+        #[Route('/search-skills', name: 'search_skills')]
+    public function searchSkills(SkillRepository $skillRepository): JsonResponse
+    {
+        // Fetch all skills from the database
+        $skills = $skillRepository->findAllSkills();
 
-#[Route('/search-skills', name: 'search_skills')]
-public function searchSkills(SkillRepository $skillRepository): JsonResponse
-{
-    // Fetch all skills from the database
-    $skills = $skillRepository->findAllSkills();
+        // Extract skill names from skill objects
+        $skillNames = array_map(function($skill) {
+            return $skill->getSkill();
+        }, $skills);
 
-    // Extract skill names from skill objects
-    $skillNames = array_map(function($skill) {
-        return $skill->getSkill();
-    }, $skills);
-
-    return new JsonResponse($skillNames);
-}
+        return new JsonResponse($skillNames);
+    }
 }
